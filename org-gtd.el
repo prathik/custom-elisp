@@ -1,5 +1,5 @@
 ;; org gtd setup
-(setq org-directory "/Users/prathikrajendran/GetThingsDone/")
+(setq org-directory "~/GetThingsDone/")
 (setq gtd-file (concat org-directory "gtd.org"))
 (setq inbox-file (concat org-directory "inbox.org"))
 (setq tickler-file (concat org-directory "tickler.org"))
