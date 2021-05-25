@@ -1,3 +1,8 @@
+;; org content
+;; this file has all the content ideas put into it
+;; content workflow: capture ideas -> write outline -> write first draft -> get feedback -> review document -> publish
+(setq org-content-ideas-file "/Users/prathikrajendran/writing/ideas.org")
+
 ;; org gtd setup
 (setq org-directory "~/GetThingsDone/")
 (setq gtd-file (concat org-directory "gtd.org"))
@@ -12,8 +17,8 @@
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline inbox-file "Tasks")
                                "* TODO %i%? [0%]")
-			      ("i" "Writing Idea" entry
-			       (file+headline org-writing-ideas-file "Ideas")
+			      ("i" "Content Idea" entry
+			       (file+headline org-content-ideas-file "Ideas")
 			       "* TODO %i%?")
                               ("T" "Tickler" entry
                                (file+headline tickler-file "Tickler")
@@ -62,5 +67,11 @@
 (add-hook 'org-mode-hook
   (lambda ()
     (local-set-key (kbd "C-c t") 'insert-subtask)))
+
+;; productivity key bindings
+(global-set-key (kbd "<f5>") (lambda() (interactive)(find-file org-content-ideas-file)))
+(global-set-key (kbd "<f6>") (lambda() (interactive)(find-file inbox-file)))
+(global-set-key (kbd "<f7>") (lambda() (interactive)(find-file gtd-file)))
+
 
 (provide 'org-gtd)
