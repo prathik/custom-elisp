@@ -1,7 +1,7 @@
 ;; org content
 ;; this file has all the content ideas put into it
 ;; content workflow: capture ideas -> write outline -> write first draft -> get feedback -> review document -> publish
-(setq org-content-ideas-file "/Users/prathikrajendran/writing/ideas.org")
+(setq org-content-ideas-file "~/writing/ideas.org")
 
 ;; org gtd setup
 (setq org-directory "~/GetThingsDone/")
