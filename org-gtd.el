@@ -69,7 +69,7 @@
     (local-set-key (kbd "C-c t") 'insert-subtask)))
 
 ;; productivity key bindings
-(global-set-key (kbd "<f5>") (lambda() (interactive)(find-file org-content-ideas-file)))
+(global-set-key (kbd "<f8>") (lambda() (interactive)(find-file org-content-ideas-file)))
 (global-set-key (kbd "<f6>") (lambda() (interactive)(find-file inbox-file)))
 (global-set-key (kbd "<f7>") (lambda() (interactive)(find-file gtd-file)))
 
