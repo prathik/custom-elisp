@@ -11,8 +11,8 @@
 (setq someday-file (concat org-directory "someday.org"))
 (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "s-a") 'org-agenda)
+(global-set-key (kbd "s-c") 'org-capture)
 
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline inbox-file "Tasks")
@@ -69,9 +69,8 @@
     (local-set-key (kbd "C-c t") 'insert-subtask)))
 
 ;; productivity key bindings
-(global-set-key (kbd "<f8>") (lambda() (interactive)(find-file org-content-ideas-file)))
 (global-set-key (kbd "<f6>") (lambda() (interactive)(find-file inbox-file)))
 (global-set-key (kbd "<f7>") (lambda() (interactive)(find-file gtd-file)))
-
+(global-set-key (kbd "<f8>") (lambda() (interactive)(find-file org-content-ideas-file)))
 
 (provide 'org-gtd)
