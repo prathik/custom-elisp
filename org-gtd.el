@@ -66,11 +66,15 @@
 
 (add-hook 'org-mode-hook
   (lambda ()
-    (local-set-key (kbd "C-c t") 'insert-subtask)))
+    (local-set-key (kbd "s-t") 'insert-subtask)))
 
 ;; productivity key bindings
 (global-set-key (kbd "<f6>") (lambda() (interactive)(find-file inbox-file)))
 (global-set-key (kbd "<f7>") (lambda() (interactive)(find-file gtd-file)))
 (global-set-key (kbd "<f8>") (lambda() (interactive)(find-file org-content-ideas-file)))
+
+;; Only show agenda for today and next day
+;; Next day is used while planning
+(setq org-agenda-span 2)
 
 (provide 'org-gtd)
