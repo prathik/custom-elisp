@@ -30,9 +30,7 @@
                            (tickler-file :maxlevel . 2)))
 
 (setq org-agenda-custom-commands 
-      '(("o" "At the office" tags-todo "@office"
-         ((org-agenda-overriding-header "Office")
-          (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))))
+      '(("s" "standup" tags-todo "standup")))
 
 (defun my-org-agenda-skip-all-siblings-but-first ()
   "Skip all but the first non-done entry."
