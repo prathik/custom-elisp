@@ -9,6 +9,7 @@
 (setq inbox-file (concat org-directory "inbox.org"))
 (setq tickler-file (concat org-directory "tickler.org"))
 (setq someday-file (concat org-directory "someday.org"))
+(setq waiting-file (concat org-directory "waiting.org"))
 (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -24,29 +25,15 @@
                                (file+headline tickler-file "Tickler")
                                "* TODO %i%? \nDEADLINE: %t")))
 
-(setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)" "CANCELLED(c)")))
-(setq org-refile-targets '((gtd-file :maxlevel . 3)
+(setq org-refile-targets '((gtd-file :maxlevel . 1)
                            (someday-file :level . 1)
-                           (tickler-file :maxlevel . 2)))
+			   (waiting-file :level . 1)
+                           (tickler-file :maxlevel . 1)))
 
 (setq org-agenda-custom-commands 
-      '(("s" "standup" tags-todo "standup")))
-
-(defun my-org-agenda-skip-all-siblings-but-first ()
-  "Skip all but the first non-done entry."
-  (let (should-skip-entry)
-    (unless (org-current-is-todo)
-      (setq should-skip-entry t))
-    (save-excursion
-      (while (and (not should-skip-entry) (org-goto-sibling t))
-        (when (org-current-is-todo)
-          (setq should-skip-entry t))))
-    (when should-skip-entry
-      (or (outline-next-heading)
-          (goto-char (point-max))))))
-		  
-(defun org-current-is-todo ()
-  (string= "TODO" (org-get-todo-state)))
+      '(("s" "@standup" tags-todo "@standup")
+	("j" "@jira" tags-todo "@jira")
+	("i" "@ipm" tags-todo "@ipm")))
 
 (setq org-refile-use-outline-path 'file)
 
@@ -62,9 +49,17 @@
   (org-shiftmetaright)
   (end-of-line))
 
+(defun archive-done ()
+  "Archive all the top level done tasks"
+  (interactive)
+  (beginning-of-buffer)
+  (org-map-entries 'org-archive-subtree "LEVEL=1/+DONE" 'file)
+  (org-map-entries 'org-archive-subtree "LEVEL=1/+CANCELED" 'file))
+
 (add-hook 'org-mode-hook
   (lambda ()
-    (local-set-key (kbd "C-c t") 'insert-subtask)))
+    (local-set-key (kbd "C-c t") 'insert-subtask)
+    (local-set-key (kbd "C-c M-a") 'archive-done)))
 
 ;; productivity key bindings
 (global-set-key (kbd "<f6>") (lambda() (interactive)(find-file inbox-file)))
