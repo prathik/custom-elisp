@@ -17,7 +17,7 @@
 
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline inbox-file "Tasks")
-                               "* TODO %i%? [0%]")
+                               "* TODO %i%? [/]")
 			      ("i" "Content Idea" entry
 			       (file+headline org-content-ideas-file "Ideas")
 			       "* TODO %i%?")
@@ -33,7 +33,10 @@
 (setq org-agenda-custom-commands 
       '(("s" "@standup" tags-todo "@standup")
 	("j" "@jira" tags-todo "@jira")
-	("i" "@ipm" tags-todo "@ipm")))
+	("i" "@ipm" tags-todo "@ipm")
+	("g" "GTD" tags-todo "LEVEL=1" ((org-agenda-files (list gtd-file))
+					(org-agenda-start-with-follow-mode t)
+			    (org-agenda-sorting-strategy '(priority-down effort-down))))))
 
 (setq org-refile-use-outline-path 'file)
 
@@ -58,7 +61,8 @@
 
 (add-hook 'org-mode-hook
   (lambda ()
-    (local-set-key (kbd "C-c t") 'insert-subtask)
+    (local-set-key (kbd "C-]") 'insert-subtask)
+    (local-set-key (kbd "C-t") 'org-todo)
     (local-set-key (kbd "C-c M-a") 'archive-done)))
 
 ;; productivity key bindings
