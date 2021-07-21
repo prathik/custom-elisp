@@ -34,9 +34,12 @@
       '(("s" "@standup" tags-todo "@standup")
 	("j" "@jira" tags-todo "@jira")
 	("i" "@ipm" tags-todo "@ipm")
-	("g" "GTD" tags-todo "LEVEL=1" ((org-agenda-files (list gtd-file))
-					(org-agenda-start-with-follow-mode t)
-			    (org-agenda-sorting-strategy '(priority-down effort-down))))))
+	("w" "Work In Progress" todo "WIP")
+	("g" "GTD" tags-todo "LEVEL=1"
+	 ((org-agenda-files (list gtd-file))
+	  (org-agenda-start-with-follow-mode t)
+	  (org-agenda-sorting-strategy '(priority-down effort-down))))))
+
 
 (setq org-refile-use-outline-path 'file)
 
