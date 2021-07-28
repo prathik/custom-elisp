@@ -10,8 +10,19 @@
 (setq tickler-file (concat org-directory "tickler.org"))
 (setq someday-file (concat org-directory "someday.org"))
 (setq waiting-file (concat org-directory "waiting.org"))
-(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
+;; all files except hidden files, ie those starting with . are matched
+(setq org-agenda-files (directory-files-recursively org-directory "^[^.].*org$"))
+
+(defun org-capture-todo ()
+  "Capture a todo item via org capture"
+  (interactive)
+  (org-capture nil "t")
+  )
+
+(global-set-key (kbd "s-a") 'org-agenda)
+(global-set-key (kbd "s-c") 'org-capture)
+(global-set-key (kbd "s-t") 'org-capture-todo)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
 
@@ -34,12 +45,12 @@
       '(("s" "@standup" tags-todo "@standup")
 	("j" "@jira" tags-todo "@jira")
 	("i" "@ipm" tags-todo "@ipm")
-	("w" "Work In Progress" todo "WIP")
+	("w" "Work In Progress" todo "WIP"
+	 ((org-agenda-start-with-follow-mode t)))
 	("g" "GTD" tags-todo "LEVEL=1"
 	 ((org-agenda-files (list gtd-file))
 	  (org-agenda-start-with-follow-mode t)
 	  (org-agenda-sorting-strategy '(priority-down effort-down))))))
-
 
 (setq org-refile-use-outline-path 'file)
 
