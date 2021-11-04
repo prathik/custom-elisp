@@ -14,6 +14,12 @@
 ;; all files except hidden files, ie those starting with . are matched
 (setq org-agenda-files (directory-files-recursively org-directory "^[^.].*org$"))
 
+(defun org-capture-idea ()
+  "Capture a todo item via org capture"
+  (interactive)
+  (org-capture nil "i")
+  )
+
 (defun org-capture-todo ()
   "Capture a todo item via org capture"
   (interactive)
@@ -21,13 +27,13 @@
   )
 
 (global-set-key (kbd "s-a") 'org-agenda)
+(global-set-key (kbd "s-n") 'org-agenda-list)
 (global-set-key (kbd "s-c") 'org-capture)
 (global-set-key (kbd "s-t") 'org-capture-todo)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "s-i") 'org-capture-idea)
 
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                               (file+headline inbox-file "Tasks")
+                               (file inbox-file)
                                "* TODO %i%? [/]")
 			      ("i" "Content Idea" entry
 			       (file+headline org-content-ideas-file "Ideas")
@@ -42,11 +48,10 @@
                            (tickler-file :maxlevel . 1)))
 
 (setq org-agenda-custom-commands 
-      '(("s" "@standup" tags-todo "@standup")
-	("j" "@jira" tags-todo "@jira")
-	("i" "@ipm" tags-todo "@ipm")
-	("w" "Work In Progress" todo "WIP"
+      '(("w" "Work In Progress" todo "WIP"
 	 ((org-agenda-start-with-follow-mode t)))
+	("i" "Writing" todo "WRITING"
+	 ((org-agenda-files (list org-content-ideas-file))))
 	("g" "GTD" tags-todo "LEVEL=1"
 	 ((org-agenda-files (list gtd-file))
 	  (org-agenda-start-with-follow-mode t)
