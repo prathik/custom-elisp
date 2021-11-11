@@ -71,6 +71,12 @@
   (org-shiftmetaright)
   (end-of-line))
 
+(defun archive-file-query (query)
+  "Every element matching the query in the file is archived."
+  (org-map-entries (lambda ()
+		     (org-archive-subtree)
+		     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+		   query 'file))
 (defun archive-done ()
   "Archive all the top level done tasks"
   (interactive)
@@ -80,7 +86,7 @@
 
 (add-hook 'org-mode-hook
   (lambda ()
-    (local-set-key (kbd "C-]") 'insert-subtask)
+    (local-set-key (kbd "C-c C-e") 'insert-subtask)
     (local-set-key (kbd "C-t") 'org-todo)
     (local-set-key (kbd "C-c M-a") 'archive-done)))
 
