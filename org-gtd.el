@@ -77,18 +77,30 @@
 		     (org-archive-subtree)
 		     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
 		   query 'file))
+
 (defun archive-done ()
   "Archive all the top level done tasks"
   (interactive)
   (beginning-of-buffer)
-  (org-map-entries 'org-archive-subtree "LEVEL=1/+DONE" 'file)
-  (org-map-entries 'org-archive-subtree "LEVEL=1/+CANCELED" 'file))
+  (archive-file-query "LEVEL=1/+DONE")
+  (archive-file-query "LEVEL=1/+CANCELED"))
+
+(defun refile-to-gtd ()
+  (org-refile nil nil (list nil gtd-file nil nil)))
+
+(defun refile-all-gtd ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (refile-to-gtd)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+   "+LEVEL=1" 'file))
 
 (add-hook 'org-mode-hook
   (lambda ()
     (local-set-key (kbd "C-c C-e") 'insert-subtask)
     (local-set-key (kbd "C-t") 'org-todo)
-    (local-set-key (kbd "C-c M-a") 'archive-done)))
+    (local-set-key (kbd "C-c C-a") 'archive-done)))
 
 ;; productivity key bindings
 (global-set-key (kbd "<f6>") (lambda() (interactive)(find-file inbox-file)))
